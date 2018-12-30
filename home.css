@@ -1,3 +1,19 @@
-.hideRow {
+.hidden-row {
     display: none;
+}
+
+.book-card {
+}
+
+.book-card-img {
+}
+
+.book-card-title {
+    font-weight: bold;
+}
+
+.book-card-body {
+}
+
+.book-card-text {
 }
