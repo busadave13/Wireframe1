@@ -75,7 +75,7 @@ function InsertBookInRow(table, item) {
     $(table).find("tr:last").append(
         "<td>" +
         "<img src='" + item.volumeInfo.imageLinks.smallThumbnail + "'/>" +
-        "<div>" + item.volumeInfo.title + "</div>" +
+        "<div>" + item.volumeInfo.title.substring(0, 15) + "...</div>" +
         "</td");
     if ($(table).find(" tr:last td").length == maxColumns) {
         table.append("<tr class='hideRow'></tr>");
