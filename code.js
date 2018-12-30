@@ -14,7 +14,7 @@ $(document).ready(function (e) {
     });
 
     // Get Json from web endpoint and process for insertion in row
-    $.getJSON("https://www.googleapis.com/books/v1/volumes?q=[tech]", function (json) {
+    $.getJSON("https://www.googleapis.com/books/v1/volumes?q=[all]", function (json) {
         // Create the first default table rows
         $("#tableA").append("<tr></tr>");
         $("#tableB").append("<tr></tr>");
@@ -72,12 +72,23 @@ function ShowHideRows(button, table) {
 // Create the book tile and insert into last row,
 // if books exceed max columns then insert a new row
 function InsertBookInRow(table, item) {
+    let maxTitleLength = 15;
+    let maxDescriptionLength = 80;
+    let description  = item.volumeInfo.description != null && item.volumeInfo.description.length > maxDescriptionLength ? item.volumeInfo.description.substring(0, maxDescriptionLength) + "..." : item.volumeInfo.description;
+    let title = item.volumeInfo.title.length > maxTitleLength ? item.volumeInfo.title.substring(0, maxTitleLength) + "..." : item.volumeInfo.title;
+
     $(table).find("tr:last").append(
         "<td>" +
-        "<img src='" + item.volumeInfo.imageLinks.smallThumbnail + "'/>" +
-        "<div>" + item.volumeInfo.title.substring(0, 15) + "...</div>" +
+            "<div class='card book-card' style='width: 18rem;'>" +
+                "<img class='card-img-top book-card-img' src='" + item.volumeInfo.imageLinks.thumbnail + "'/>" +
+                "<div class='card-body book-card-body'>" +
+                    "<h4 class='card-title book-card-title'>" + title + "</h4>" +
+                    "<p class='card-text book-card-text'>"+ description + "</p>" +
+                    "<a href='" + item.volumeInfo.previewLink + "' class='btn btn-primary'>Preview</a>" +
+                "</div>" +
+            "</div>" +
         "</td");
     if ($(table).find(" tr:last td").length == maxColumns) {
-        table.append("<tr class='hideRow'></tr>");
+        table.append("<tr class='hidden-row'></tr>");
     }
 }
